@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Background Color Changer</title>
+<style>
+*{
+    margin:0;
+}
+
+.container{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-family:fantasy;
+    background-color:blanchedalmond;
+}
+
+.listenBtn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Franklin Gothic Medium','Arial Narrow',Arial,sans-serif;
+    font-size:20px;
+    background:#f5f5f5;
+    padding:2%;
+    width:100px;
+    height:70px;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.listenBtn:hover{
+    background:orange;
+    color:white;
+    transform:translateY(-5px);
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1 class="title">Background Color Changer</h1>
+    <button class="listenBtn">Tell The Color</button>
+</div>
+
+<script>
+const SpeechRecognition =
+window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const recognition = new SpeechRecognition();
+recognition.continuous = false;
+recognition.lang = "en-US";
+
+let listenBtn = document.querySelector(".listenBtn");
+let container = document.querySelector(".container");
+
+listenBtn.onclick = () => {
+    recognition.start();
+};
+
+recognition.onresult = (event) => {
+    let userColor = event.results[0][0].transcript
+        .toLowerCase()
+        .trim();
+
+    console.log(userColor);
+    container.style.backgroundColor = userColor;
+};
+</script>
+</body>
+</html>
